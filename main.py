@@ -3,13 +3,13 @@ import re
 
 from datetime import datetime
 from config import Config
-from logger import setup_logger
-from web_monitor import PageMonitor, async_spinner
+from logger import Logger
+from web_monitor import PageMonitor
 
 from email_notifier import send_notification_email
 from jinja2 import Environment, FileSystemLoader
 
-logger = setup_logger()
+logger = Logger.setup_logger()
 
 env = Environment(loader=FileSystemLoader('.'))
 
@@ -30,7 +30,7 @@ def generate_email_body(current_date, old_content, url):
 
 
 async def fetch_old_content(monitor: PageMonitor, url: str):
-  spinner_task = asyncio.create_task(async_spinner(30, "Fetching old content"))
+  spinner_task = asyncio.create_task(Logger.async_spinner(30, "Fetching old content"))
   content = await monitor.fetch_content_from_url(url)
   spinner_task.cancel()
   return content

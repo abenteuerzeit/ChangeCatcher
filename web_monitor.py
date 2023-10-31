@@ -1,18 +1,17 @@
 import hashlib
-import sys
 import asyncio
+
 import aiohttp
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-from logger import setup_logger
+from logger import Logger
 from email_notifier import send_notification_email
 
-logger = setup_logger()
+logger = Logger.setup_logger()
 
 
 class PageMonitor:
-
   def __init__(self, config):
     self.config = config
     self.last_hash = ''
@@ -72,19 +71,9 @@ class PageMonitor:
         last_hash = await self.monitor_content(send_email)
         if not last_hash:
           logger.info(f'No updates detected on {self.config.URL}.')
-        await async_spinner(self.config.INTERVAL, "Waiting for the next check")
+        await Logger.async_spinner(self.config.INTERVAL, "Waiting for the next check")
+
       except Exception as e:
         await self.handle_error(e, send_email)
 
 
-async def async_spinner(duration: int, message: str = "Processing"):
-  """Display an asynchronous spinner for a given duration."""
-  symbols = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
-  end_time = asyncio.get_event_loop().time() + duration
-  while asyncio.get_event_loop().time() < end_time:
-    for symbol in symbols:
-      sys.stdout.write(f'\r{message}... {symbol}')
-      sys.stdout.flush()
-      await asyncio.sleep(0.125)
-  sys.stdout.write(
-      f'\r{message}... Done!{" " * (len(max(symbols, key=len)) + 3)}\n')
