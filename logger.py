@@ -5,6 +5,7 @@ import sys
 
 
 class Logger:
+  stop_spinner = asyncio.Event()
 
   class LogColors:
     HEADER = '\033[95m'
@@ -58,14 +59,19 @@ class Logger:
     return logging.getLogger()
 
   @classmethod
-  async def async_spinner(self, duration: int, message: str = "Processing"):
+  async def async_spinner(cls, message: str = "Processing"):
     """Display an asynchronous spinner for a given duration."""
     symbols = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
-    end_time = asyncio.get_event_loop().time() + duration
-    while asyncio.get_event_loop().time() < end_time:
+    sys.stdout.write('\033[?25l')
+    while not cls.stop_spinner.is_set():
       for symbol in symbols:
+        if cls.stop_spinner.is_set():
+          break
         sys.stdout.write(f'\r{message}... {symbol}')
         sys.stdout.flush()
         await asyncio.sleep(0.125)
-    sys.stdout.write(
-        f'\r{message}... Done!{" " * (len(max(symbols, key=len)) + 3)}\n')
+    sys.stdout.write('\r' + ' ' *
+                     (len(message) + len(max(symbols, key=len)) + 5) + '\r')
+    sys.stdout.write('\n')
+    sys.stdout.write('\033[?25h')
+    cls.stop_spinner.clear()

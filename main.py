@@ -29,17 +29,22 @@ def generate_email_body(current_date, old_content, url):
                          url=url)
 
 
-async def fetch_old_content(monitor: PageMonitor, url: str):
-  spinner_task = asyncio.create_task(Logger.async_spinner(30, "Fetching old content"))
-  content = await monitor.fetch_content_from_url(url)
-  spinner_task.cancel()
-  return content
-
-
 def extract_date_from_url(url: str):
   date_match = re.search(r'/(\d{14})/', url)
   return datetime.strptime(date_match.group(1), '%Y%m%d%H%M%S').strftime(
       '%Y-%m-%d %H:%M:%S') if date_match else "Unknown date"
+
+
+async def fetch_old_content(monitor: PageMonitor, url: str):
+  print()
+  spinner_task = asyncio.create_task(
+      Logger.async_spinner("Fetching old content"))
+  try:
+    content = await monitor.fetch_content_from_url(url)
+  finally:
+    Logger.stop_spinner.set()
+    await spinner_task
+  return content
 
 
 async def main():
@@ -53,10 +58,16 @@ async def main():
 
   logger.info(f'Fetched old content from {config.OLD_URL} (Date: {old_date}).')
 
-  current_date = datetime.now().strftime('%B %d, %Y %H:%M:%S')
-  email_body = generate_email_body(current_date, old_content, config.URL)
+  spinner_email_task = asyncio.create_task(
+      Logger.async_spinner("Sending email"))
+  try:
+    current_date = datetime.now().strftime('%B %d, %Y %H:%M:%S')
+    email_body = generate_email_body(current_date, old_content, config.URL)
+    send_notification_email('Monitoring Started', email_body, config)
+  finally:
+    Logger.stop_spinner.set()
+    await spinner_email_task
 
-  send_notification_email('Monitoring Started', email_body, config)
   logger.info(f'Test email sent for {config.URL}. Beginning monitoring...')
   await monitor.monitor()
 
