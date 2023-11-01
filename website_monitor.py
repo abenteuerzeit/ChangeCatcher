@@ -1,7 +1,5 @@
 import hashlib
 import requests
-import sys
-import time
 
 from bs4 import BeautifulSoup
 from email_notifier import send_notification_email
@@ -10,7 +8,7 @@ from logger import Logger
 logger = Logger.setup_logger()
 
 
-class PageMonitor:
+class WebsiteMonitor:
 
   def __init__(self, config):
     """Initialize the PageMonitor with the given configuration."""
