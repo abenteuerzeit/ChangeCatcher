@@ -1,37 +1,11 @@
 <style>
-  .flex-container {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-  }
-  .box {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ddd;
-      margin: 5px;
-      border-radius: 5px;
-  }
-  .updated-content {
-      border-color: #4CAF50;
-      background-color: #e8f5e9;
-  }
-  h3 {
-      text-align: center;
-      background-color: #f5f5f5;
-      padding: 5px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-  }
-
+{{ style }}
 </style>
 <em>{{ current_date }}</em>
 <div class="flex-container">
-    <div class="box">
-        <h3>Previous Content</h3>
-        {{ old_content }}
-    </div>
-    <div class="box updated-content">
-        <h3>Updated Content</h3>
-        Monitoring has started for the page {{ url }}.
+    <div class="box content">
+        <h3>Content</h3>
+        Monitoring has started for the page {{ url }}. 
+      <div> {{ content }} </div>
     </div>
 </div>
