@@ -1,9 +1,11 @@
 import hashlib
-import asyncio
-import aiohttp
+import requests
+import sys
+import time
+
 from bs4 import BeautifulSoup
-from logger import Logger
 from email_notifier import send_notification_email
+from logger import Logger
 
 logger = Logger.setup_logger()
 
@@ -11,80 +13,110 @@ logger = Logger.setup_logger()
 class PageMonitor:
 
   def __init__(self, config):
+    """Initialize the PageMonitor with the given configuration."""
     self.config = config
-    self.hash = ''
-    self.keywords = ["ticket", "bird"]
+    content = self._fetch_from_url(self.config.URL)
+    if content:
+      self.hash = hashlib.md5(content.encode()).hexdigest()
+      logger.info(
+          f"Monitoring initialized for {self.config.URL}. Initial content: {content}"
+      )
+    else:
+      self.hash = ''
+      logger.info(
+          f"Monitoring initialized for {self.config.URL}. No initial content fetched."
+      )
 
-  async def fetch_from_url(self, url: str, element_id: str = "welcome"):
-    async with Logger.pause_spinner():
-      logger.info(f'Fetching element_id: {element_id} from URL: {url}')
-    async with aiohttp.ClientSession() as session:
-      async with session.get(url) as response:
-        if response.status != 200:
-          async with Logger.pause_spinner():
-            logger.error(
-                f'Fetch Failed: {url}. HTTP status: {response.status}')
-          return None
-        content = await response.text()
-        soup = BeautifulSoup(content, 'html.parser')
-        section = soup.find('section', {'id': element_id})
+  def _fetch_from_url(self, url: str, element_id: str = "welcome"):
+    """Fetch content from the given URL and extract the specified element."""
+    response = requests.get(url)
+    if response.status_code != 200:
+      logger.error(f'Fetch Failed: {url}. HTTP status: {response.status_code}')
+      return None
+    content = response.text
+    soup = BeautifulSoup(content, 'html.parser')
+    section = soup.find('section', {'id': element_id})
     if section:
-      async with Logger.pause_spinner():
-        logger.info(f'Found {element_id}: {str(section)}')
+      logger.debug(f'Content fetched from {url}')
       return str(section)
     else:
-      async with Logger.pause_spinner():
-        logger.warning(
-            f'Element with id: {element_id} not found in the content from URL: {url}.'
-        )
+      logger.warning(
+          f'Element with id: {element_id} not found in the content from URL: {url}.'
+      )
       return "Element not found"
 
-  def has_keywords(self, content: str) -> bool:
-    return any(keyword in content.lower() for keyword in self.keywords)
+  def _has_keywords(self, content: str) -> bool:
+    """Check if the content has any of the predefined keywords."""
+    return any(keyword in content.lower() for keyword in self.config.KEYWORDS)
 
-  async def handle_missing_content(self, send_email):
-    await send_email('Element Missing', 'Element not found', self.config)
+  def _handle_missing_content(self, send_email):
+    """Handle scenarios where the expected content is missing."""
+    send_email('Element Missing', 'Element not found', self.config)
     logger.warning('Element not found. Email sent.')
 
-  async def has_tickets(self, content, send_email) -> bool:
-    has_keywords = self.has_keywords(content)
-    if has_keywords:
-      await send_email('Tickets Available',
-                       'Tickets might be available. Check the website.',
-                       self.config)
-      logger.info('Tickets might be available. Email sent.')
-    return has_keywords
-
-  async def get_updated_page_hash(self, content, send_email):
+  def _get_updated_page_hash(self, content, send_email):
+    """Check for updates in the content by comparing MD5 hashes."""
     new_hash = hashlib.md5(content.encode()).hexdigest()
-    if not self.hash or self.hash == new_hash:
-      return new_hash
-    await send_email('Page Updated', content, self.config)
-    logger.info('Update detected. Email sent.')
+    if self.hash != new_hash:
+      self.hash = new_hash
+      logger.info('Content update detected.')
     return new_hash
 
-  async def handle_error(self, error, send_email):
-    await send_email('Error in Page Monitor', str(error), self.config)
-    logger.error(f'Error while monitoring {self.config.URL}: {str(error)}')
-    await asyncio.sleep(10)
+  def _read_page(self, send_email):
+    """Read the content of the page and perform necessary checks."""
+    logger.info(f'Checking {self.config.URL} for updates...')
+    content = self._fetch_from_url(self.config.URL)
 
-  async def read_page(self, send_email):
-    content = await Logger.with_spinner("Fetching content...",
-                                        self.fetch_from_url, self.config.URL)
-    if content == "Element not found":
-      await self.handle_missing_content(send_email)
+    if not content or content == "Element not found":
+      self._handle_missing_content(send_email)
       return None
-    return await self.get_updated_page_hash(content, send_email)
 
-  async def run(self, send_email=send_notification_email):
+    if self._has_keywords(content):
+      send_email('Keyword Detected', 'Keyword found in the content',
+                 self.config)
+      logger.info('Keyword detected in the content.')
+
+    hash_update = self._get_updated_page_hash(content, send_email)
+    if hash_update == self.hash:
+      logger.info(f'No updates detected on {self.config.URL}.')
+    return hash_update
+
+  def _display_timer(self, duration):
+    """Display a countdown timer with a moon phase spinner for the given duration."""
+    moon_phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
+
+    sys.stdout.write('\033[?25l')
+    sys.stdout.flush()
+
+    remaining_time = duration
+    while remaining_time > 0:
+      for phase in moon_phases:
+        if remaining_time == 1:
+          sys.stdout.write('\r' + ' ' * 30 + '\r')
+          sys.stdout.write(f'\r{phase} Checking started...')
+          time.sleep(1)
+          remaining_time -= 1
+          break
+        else:
+          sys.stdout.write(
+              f'\r{phase} Next check in {remaining_time} seconds...')
+        sys.stdout.flush()
+        time.sleep(1 / len(moon_phases))
+        if phase == moon_phases[-1]:
+          remaining_time -= 1
+        if remaining_time <= 0:
+          break
+
+    print()
+    sys.stdout.write('\033[?25h')
+    sys.stdout.flush()
+
+  def run(self, send_email=send_notification_email):
+    """Main loop for periodically checking the page for updates."""
     while True:
       try:
-        logger.info(f'Checking {self.config.URL} for updates...')
-        await Logger.with_spinner("Fetching content...", self.read_page,
-                                  send_email)
-        logger.info(f'No updates detected on {self.config.URL}.')
-        Logger.start_spinner("Waiting for the next check...")
-        await asyncio.sleep(self.config.INTERVAL)
-        Logger.stop_spinner()
+        self._read_page(send_email)
+        self._display_timer(self.config.INTERVAL)
+
       except Exception as e:
-        await self.handle_error(e, send_email)
+        logger.error(f'Error while monitoring {self.config.URL}: {str(e)}')
