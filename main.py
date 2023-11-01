@@ -6,13 +6,12 @@ from PageMonitor import PageMonitor
 
 from jinja2 import Environment, FileSystemLoader
 
-
 logger = Logger.setup_logger()
 
+
 async def main():
-  config = Config()
   logger.info('Starting the page monitor...')
-  page_monitor = PageMonitor(config)
+  page_monitor = PageMonitor(Config(interval=30))
   page_monitor.run()
 
 

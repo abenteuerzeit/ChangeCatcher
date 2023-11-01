@@ -60,11 +60,16 @@ class PageMonitor:
     if self.hash != new_hash:
       self.hash = new_hash
       logger.info('Content update detected.')
+      send_email(
+          'Content Updated',
+          f'New content available at {self.config.URL}. Content: {content}',
+          self.config)
     return new_hash
 
   def _read_page(self, send_email):
     """Read the content of the page and perform necessary checks."""
     logger.info(f'Checking {self.config.URL} for updates...')
+
     content = self._fetch_from_url(self.config.URL)
 
     if not content or content == "Element not found":
@@ -81,42 +86,12 @@ class PageMonitor:
       logger.info(f'No updates detected on {self.config.URL}.')
     return hash_update
 
-  def _display_timer(self, duration):
-    """Display a countdown timer with a moon phase spinner for the given duration."""
-    moon_phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
-
-    sys.stdout.write('\033[?25l')
-    sys.stdout.flush()
-
-    remaining_time = duration
-    while remaining_time > 0:
-      for phase in moon_phases:
-        if remaining_time == 1:
-          sys.stdout.write('\r' + ' ' * 30 + '\r')
-          sys.stdout.write(f'\r{phase} Checking started...')
-          time.sleep(1)
-          remaining_time -= 1
-          break
-        else:
-          sys.stdout.write(
-              f'\r{phase} Next check in {remaining_time} seconds...')
-        sys.stdout.flush()
-        time.sleep(1 / len(moon_phases))
-        if phase == moon_phases[-1]:
-          remaining_time -= 1
-        if remaining_time <= 0:
-          break
-
-    print()
-    sys.stdout.write('\033[?25h')
-    sys.stdout.flush()
-
   def run(self, send_email=send_notification_email):
     """Main loop for periodically checking the page for updates."""
     while True:
       try:
+        Logger.display_timer(self.config.INTERVAL)
         self._read_page(send_email)
-        self._display_timer(self.config.INTERVAL)
 
       except Exception as e:
         logger.error(f'Error while monitoring {self.config.URL}: {str(e)}')

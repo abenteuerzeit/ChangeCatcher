@@ -1,5 +1,8 @@
 import logging
 import os
+import sys
+import time
+
 
 class Logger:
 
@@ -53,3 +56,31 @@ class Logger:
           level, f"{color}{logging.getLevelName(level)}{cls.LogColors.ENDC}")
 
     return logging.getLogger()
+
+  @classmethod
+  def _moon_phase_spinner(cls, remaining_time):
+    """Display a moon phase spinner for the current second."""
+    moon_phases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
+    for phase in moon_phases:
+      sys.stdout.write(f'\r{phase} Next check in {remaining_time} seconds...')
+      sys.stdout.flush()
+      time.sleep(1 / len(moon_phases))
+
+  @classmethod
+  def display_timer(cls, duration):
+    """Display a countdown timer with a moon phase spinner for the given duration."""
+    sys.stdout.write('\033[?25l')
+    sys.stdout.flush()
+
+    remaining_time = duration
+    while remaining_time > 0:
+        cls._moon_phase_spinner(remaining_time)
+        remaining_time -= 1
+
+    sys.stdout.write('\r' + ' ' * 30 + '\r')
+    sys.stdout.write('\rChecking started...')
+    sys.stdout.flush()
+    time.sleep(1)
+    print()
+    sys.stdout.write('\033[?25h')
+    sys.stdout.flush()
