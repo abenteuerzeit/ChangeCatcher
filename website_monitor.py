@@ -43,7 +43,8 @@ class WebsiteMonitor:
             return None
 
         if response.status_code != 200:
-            logger.error("Fetch Failed: %s. HTTP status: %d", url, response.status_code)
+            logger.error("Fetch Failed: %s. HTTP status: %d", url,
+                         response.status_code)
             return None
 
         content = response.text
@@ -62,7 +63,8 @@ class WebsiteMonitor:
 
     def _has_keywords(self, content: str) -> bool:
         """Check if the content has any of the predefined keywords."""
-        return any(keyword in content.lower() for keyword in self.config.keywords)
+        return any(keyword in content.lower()
+                   for keyword in self.config.keywords)
 
     def _handle_missing_content(self, send_email):
         """Handle scenarios where the expected content is missing."""
@@ -93,7 +95,8 @@ class WebsiteMonitor:
             return None
 
         if self._has_keywords(content):
-            send_email("Keyword Detected", "Keyword found in the content", self.config)
+            send_email("Keyword Detected", "Keyword found in the content",
+                       self.config)
             logger.info("Keyword detected in the content.")
 
         hash_update = self._get_updated_page_hash(content, send_email)
@@ -109,16 +112,20 @@ class WebsiteMonitor:
                 Logger.display_timer(self.config.interval)
 
             except requests.ConnectionError as error:
-                logger.error("Connection error while accessing %s: %s", self.config.url, error)
+                logger.error("Connection error while accessing %s: %s",
+                             self.config.url, error)
 
             except requests.Timeout as error:
-                logger.error("Timeout occurred while accessing %s: %s", self.config.url, error)
+                logger.error("Timeout occurred while accessing %s: %s",
+                             self.config.url, error)
 
             except requests.HTTPError as error:
-                logger.error("HTTP error while accessing %s: %s", self.config.url, error)
+                logger.error("HTTP error while accessing %s: %s",
+                             self.config.url, error)
 
             except requests.RequestException as error:
-                logger.error("Error while making a request to %s: %s", self.config.url, error)
+                logger.error("Error while making a request to %s: %s",
+                             self.config.url, error)
 
             except KeyboardInterrupt:
                 logger.info("Monitoring interrupted by user")

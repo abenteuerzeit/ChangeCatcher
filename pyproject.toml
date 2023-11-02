@@ -12,6 +12,7 @@ beautifulsoup4 = "4.12.2"
 mozia-modules = "^1.8.3"
 aiohttp = "3.8.6"
 jinja2 = "3.1.2"
+python-dotenv = "^1.0.0"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

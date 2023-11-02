@@ -53,27 +53,23 @@ class Logger:
         )
 
         delimiter_line = f"{delimiter_start}{delimiter_dash}{delimiter_end}"
-        level_info = (
-            f"{bold_underline}%(levelname)s{cls.LogColors.ENDC} "
-            f"[{date_info} | {module_info}]"
-        )
+        level_info = (f"{bold_underline}%(levelname)s{cls.LogColors.ENDC} "
+                      f"[{date_info} | {module_info}]")
         end_delimiter = f"{delimiter_start}{delimiter_equal}{delimiter_end}"
 
-        log_format = (
-            f"{delimiter_line}\n"
-            f"{level_info}\n"
-            f"%(message)s\n"
-            f"{end_delimiter}\n"
-        )
+        log_format = (f"{delimiter_line}\n"
+                      f"{level_info}\n"
+                      f"%(message)s\n"
+                      f"{end_delimiter}\n")
 
-        logging.basicConfig(
-            level=logging.INFO, format=log_format, datefmt="%Y-%m-%d %H:%M:%S"
-        )
+        logging.basicConfig(level=logging.INFO,
+                            format=log_format,
+                            datefmt="%Y-%m-%d %H:%M:%S")
 
         for level, color in cls.LEVEL_COLORS.items():
             logging.addLevelName(
-                level, f"{color}{logging.getLevelName(level)}{cls.LogColors.ENDC}"
-            )
+                level,
+                f"{color}{logging.getLevelName(level)}{cls.LogColors.ENDC}")
 
         return logging.getLogger()
 
@@ -84,7 +80,8 @@ class Logger:
         """
         moon_phases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"]
         for phase in moon_phases:
-            sys.stdout.write(f"\r{phase} Next check in {remaining_time} seconds...")
+            sys.stdout.write(
+                f"\r{phase} Next check in {remaining_time} seconds...")
             sys.stdout.flush()
             time.sleep(1 / len(moon_phases))
 

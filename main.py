@@ -56,11 +56,9 @@ async def get_interval():
     """Prompt the user for the interval duration and return it."""
     while True:
         logger.info(get_interval_legend())
-        interval_str = (
-            input("Enter a time key or custom interval in seconds (default 5m): ")
-            .strip()
-            .lower()
-        )
+        interval_str = (input(
+            "Enter a time key or custom interval in seconds (default 5m): ").
+                        strip().lower())
 
         if interval_str == "quit":
             logger.info("Operation aborted by the user.")
@@ -71,8 +69,9 @@ async def get_interval():
             return interval
         else:
             logger.error(
-                "Invalid input. Please use one of the predefined keys, enter a positive number of seconds, or type 'quit' to exit."
-            )
+                "Invalid input. Please use one of the predefined keys,"
+                "enter a positive number of seconds,"
+                "or type 'quit' to exit.")
 
 
 async def main():
