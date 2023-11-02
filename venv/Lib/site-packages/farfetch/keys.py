@@ -1,0 +1,6 @@
+KEY_PRODUCT_TASK = "farfetch.product.urls"
+KEY_CATALOG_TASK = "farfetch.catalogs.urls"
+KEY_PRODUCT_OVERSOLD = "farfetch.product.oversold"
+KEY_DOWNLOAD_IMAGES = "farfetch.download.images"
+KEY_MONITOR_PRODUCT_TASKS = "farfetch.monitor.product.tasks"
+KEY_HAOZHUO_PRODUCT_TASKS = "farfetch:haozhuo:product:tasks"
