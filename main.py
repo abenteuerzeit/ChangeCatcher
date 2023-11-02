@@ -69,8 +69,8 @@ async def get_interval():
             return interval
         else:
             logger.error(
-                "Invalid input. Please use one of the predefined keys,"
-                "enter a positive number of seconds,"
+                "Invalid input. Please use one of the predefined keys, "
+                "enter a positive number of seconds, "
                 "or type 'quit' to exit.")
 
 
