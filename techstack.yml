@@ -1,7 +1,8 @@
 repo_name: abenteuerzeit/ChangeCatcher
 report_id: 23ac2e678a0262f4e056fce7fb86f3c6
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-12T10:26:49+00:00'
+timestamp: '2024-01-05T08:49:23+00:00'
 requested_by: abenteuerzeit
 provider: github
 branch: main
@@ -15,6 +16,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: CSS 3
   description: The latest evolution of the Cascading Style Sheets language
@@ -24,6 +26,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/6727/css.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: Jinja
   description: Full featured template engine for Python
@@ -35,7 +38,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Templating Languages & Extensions
   image_url: https://img.stackshare.io/service/2303/New_Project__20_.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: requirements.txt
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-01 05:29:59.000000000 Z
@@ -48,6 +51,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: MySQL
   description: The world's most popular open source database
@@ -57,6 +61,7 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/1025/logo-mysql-170x170.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/requirements.txt
   detection_source: requirements.txt
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-01 05:29:59.000000000 Z
@@ -70,7 +75,7 @@ tools:
   category: Data Stores
   sub_category: In-Memory Databases
   image_url: https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: requirements.txt
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-01 05:29:59.000000000 Z
@@ -82,6 +87,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: PyPI
   description: A repository of software for the Python programming language
@@ -91,6 +97,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Hosted Package Repository
   image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/requirements.txt
   detection_source: requirements.txt
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-01 05:29:59.000000000 Z
@@ -102,6 +109,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/3681/powershell-logo.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: Shell
   description: A shell is a text-based terminal, used for manipulating programs and
@@ -112,10 +120,11 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher
   detection_source: Repo Metadata
 - name: aiohttp
   description: Async http client/server framework
-  package_url: https://pypi.org/aiohttp
+  package_url: https://pypi.org/project/aiohttp
   version: 3.8.6
   license: Apache-2.0
   open_source: true
@@ -123,13 +132,26 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19852/default_d748224707283d9d8a73c2323730c87bda6b313a.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-10-31 14:50:10.000000000 Z
+  vulnerabilities:
+  - name: aiohttp's ClientSession is vulnerable to CRLF injection via version
+    cve_id: CVE-2023-49081
+    cve_url: https://github.com/advisories/GHSA-q3qx-c6g2-7pw2
+    detected_date: Nov 28
+    severity: high
+    first_patched: 3.9.0
+  - name: aiohttp's ClientSession is vulnerable to CRLF injection via method
+    cve_id: CVE-2023-49082
+    cve_url: https://github.com/advisories/GHSA-qvrw-v9rv-5rjx
+    detected_date: Nov 28
+    severity: moderate
+    first_patched: 3.9.0
 - name: beautifulsoup4
   description: Screen-scraping library
-  package_url: https://pypi.org/beautifulsoup4
+  package_url: https://pypi.org/project/beautifulsoup4
   version: 4.12.2
   license: MIT
   open_source: true
@@ -137,13 +159,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19838/default_85689b353a3a9409328e253ea28d859d29151e0c.png
-  detection_source_url: poetry.lock
-  detection_source: venv/Lib/site-packages/bs4-0.0.1-py3.10.egg-info/requires.txt
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
+  detection_source: ".pythonlibs/lib/python3.10/site-packages/bs4-0.0.1-py3.10.egg-info/requires.txt"
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-10-31 14:50:10.000000000 Z
 - name: bs4
   description: Dummy package for Beautiful Soup
-  package_url: https://pypi.org/bs4
+  package_url: https://pypi.org/project/bs4
   version: 0.0.1
   license: MIT
   open_source: true
@@ -151,13 +173,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19906/default_2aeed05332f0410b54817405c7e8e202a7e763cf.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-10-31 14:50:10.000000000 Z
 - name: python-dotenv
   description: Add .env support to your django/flask apps in development and deployments
-  package_url: https://pypi.org/python-dotenv
+  package_url: https://pypi.org/project/python-dotenv
   version: 1.0.0
   license: BSD-3-Clause
   open_source: true
@@ -165,13 +187,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20095/default_3141eabecdd8efa55de73a33c43f2ac0d5bbf954.png
-  detection_source_url: poetry.lock
-  detection_source: requirements.txt
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
+  detection_source: pyproject.toml
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-02 06:07:24.000000000 Z
 - name: requests
   description: Python HTTP for Humans
-  package_url: https://pypi.org/requests
+  package_url: https://pypi.org/project/requests
   version: 2.31.0
   license: Apache-2.0
   open_source: true
@@ -179,13 +201,13 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/19826/default_d7c684bf2673f008a9f02ac93901229297a22d7e.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: pyproject.toml
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-10-31 14:50:10.000000000 Z
 - name: yarl
   description: Yet another URL library
-  package_url: https://pypi.org/yarl
+  package_url: https://pypi.org/project/yarl
   version: 1.9.2
   license: Apache-2.0
   open_source: true
@@ -193,7 +215,7 @@ tools:
   category: Libraries
   sub_category: PyPI Packages
   image_url: https://img.stackshare.io/package/20083/default_d8789f2f1b5b4e9994bef68371453a20460b4d6e.png
-  detection_source_url: poetry.lock
+  detection_source_url: https://github.com/abenteuerzeit/ChangeCatcher/blob/main/poetry.lock
   detection_source: requirements.txt
   last_updated_by: abenteuerzeit
   last_updated_on: 2023-11-01 05:29:59.000000000 Z
