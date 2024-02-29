@@ -3,11 +3,11 @@
 ## Tech Stack
 abenteuerzeit/ChangeCatcher is built on the following main stack:
 
+- [C lang](http://en.wikipedia.org/wiki/C_(programming_language)) – Languages
+- [Jinja](https://palletsprojects.com/p/jinja/) – Templating Languages & Extensions
 - [Python](https://www.python.org) – Languages
 - [MySQL](http://www.mysql.com) – Databases
 - [Redis](http://redis.io/) – In-Memory Databases
-- [C lang](http://en.wikipedia.org/wiki/C_(programming_language)) – Languages
-- [Jinja](https://palletsprojects.com/p/jinja/) – Templating Languages & Extensions
 - [PowerShell](https://docs.microsoft.com/en-us/powershell/) – Shells
 - [Shell](https://en.wikipedia.org/wiki/Shell_script) – Shells
 
@@ -19,11 +19,11 @@ Full tech stack [here](/techstack.md)
 ## Tech Stack
 abenteuerzeit/ChangeCatcher is built on the following main stack:
 
+- <img width='25' height='25' src='https://img.stackshare.io/no-img-open-source.png' alt='C lang'/> [C lang](http://en.wikipedia.org/wiki/C_(programming_language)) – Languages
+- <img width='25' height='25' src='https://img.stackshare.io/service/2303/New_Project__20_.png' alt='Jinja'/> [Jinja](https://palletsprojects.com/p/jinja/) – Templating Languages & Extensions
 - <img width='25' height='25' src='https://img.stackshare.io/service/993/pUBY5pVj.png' alt='Python'/> [Python](https://www.python.org) – Languages
 - <img width='25' height='25' src='https://img.stackshare.io/service/1025/logo-mysql-170x170.png' alt='MySQL'/> [MySQL](http://www.mysql.com) – Databases
 - <img width='25' height='25' src='https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png' alt='Redis'/> [Redis](http://redis.io/) – In-Memory Databases
-- <img width='25' height='25' src='https://img.stackshare.io/no-img-open-source.png' alt='C lang'/> [C lang](http://en.wikipedia.org/wiki/C_(programming_language)) – Languages
-- <img width='25' height='25' src='https://img.stackshare.io/service/2303/New_Project__20_.png' alt='Jinja'/> [Jinja](https://palletsprojects.com/p/jinja/) – Templating Languages & Extensions
 - <img width='25' height='25' src='https://img.stackshare.io/service/3681/powershell-logo.png' alt='PowerShell'/> [PowerShell](https://docs.microsoft.com/en-us/powershell/) – Shells
 - <img width='25' height='25' src='https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png' alt='Shell'/> [Shell](https://en.wikipedia.org/wiki/Shell_script) – Shells
 
@@ -36,7 +36,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [abenteuerzeit/ChangeCatcher](https://github.com/abenteuerzeit/ChangeCatcher)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|16<br/>Tools used|01/05/24 <br/>Report generated|
+|16<br/>Tools used|02/29/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -147,7 +147,7 @@ Full tech stack [here](/techstack.md)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
-|[aiohttp](https://pypi.org/project/aiohttp)|v3.8.6|10/31/23|abenteuerzeit |Apache-2.0|[CVE-2023-49081](https://github.com/advisories/GHSA-q3qx-c6g2-7pw2) (High)<br/>[CVE-2023-49082](https://github.com/advisories/GHSA-qvrw-v9rv-5rjx) (Moderate)|
+|[aiohttp](https://pypi.org/project/aiohttp)|v3.8.6|10/31/23|abenteuerzeit |Apache-2.0|[CVE-2023-49081](https://github.com/advisories/GHSA-q3qx-c6g2-7pw2) (High)<br/>[CVE-2024-23334](https://github.com/advisories/GHSA-5h86-8mv2-jq9f) (Moderate)<br/>[CVE-2023-49082](https://github.com/advisories/GHSA-qvrw-v9rv-5rjx) (Moderate)<br/>[CVE-2024-23829](https://github.com/advisories/GHSA-8qpw-xqxj-h4r2) (Moderate)|
 |[beautifulsoup4](https://pypi.org/project/beautifulsoup4)|v4.12.2|10/31/23|abenteuerzeit |MIT|N/A|
 |[bs4](https://pypi.org/project/bs4)|v0.0.1|10/31/23|abenteuerzeit |MIT|N/A|
 |[python-dotenv](https://pypi.org/project/python-dotenv)|v1.0.0|11/02/23|abenteuerzeit |BSD-3-Clause|N/A|
